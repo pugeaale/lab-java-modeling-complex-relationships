@@ -21,20 +21,18 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Member member = new Member("salvatore",
-                ZonedDateTime.now(),
-                MemberStatus.ACTIVE);
-        Member memberSaved = memberService.save(member);
-        System.out.println(memberSaved);
+        Chapter chapter = new Chapter("bronx","one");
 
         Member president = new Member("joseph",
                 ZonedDateTime.now(),
                 MemberStatus.ACTIVE);
-        Member presidentSaved = memberService.save(president);
-        System.out.println(presidentSaved);
 
-        Chapter chapter = new Chapter("bronx","one", presidentSaved);
-        Chapter chapterSaved = chapterService.save(chapter);
-        System.out.println(chapterSaved);
+        chapter.setPresident(president);
+        chapterService.save(chapter);
+
+        Member member = new Member("salvatore",
+                ZonedDateTime.now(),
+                MemberStatus.ACTIVE);
+        memberService.save(member);
     }
 }

@@ -17,13 +17,12 @@ public class Chapter {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "presidentId")
     private Member president;
 
-    public Chapter(String district, String name, Member president) {
+    public Chapter(String district, String name) {
         this.district = district;
         this.name = name;
-        this.president = president;
     }
 }
