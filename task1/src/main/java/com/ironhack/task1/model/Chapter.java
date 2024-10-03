@@ -1,9 +1,6 @@
 package com.ironhack.task1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,8 +17,13 @@ public class Chapter {
 
     private String name;
 
-    public Chapter(String district, String name) {
+    @OneToOne
+    @JoinColumn(name = "presidentId")
+    private Member president;
+
+    public Chapter(String district, String name, Member president) {
         this.district = district;
         this.name = name;
+        this.president = president;
     }
 }

@@ -27,7 +27,13 @@ public class DataLoader implements CommandLineRunner {
         Member memberSaved = memberService.save(member);
         System.out.println(memberSaved);
 
-        Chapter chapter = new Chapter("bronx","one");
+        Member president = new Member("joseph",
+                ZonedDateTime.now(),
+                MemberStatus.ACTIVE);
+        Member presidentSaved = memberService.save(president);
+        System.out.println(presidentSaved);
+
+        Chapter chapter = new Chapter("bronx","one", presidentSaved);
         Chapter chapterSaved = chapterService.save(chapter);
         System.out.println(chapterSaved);
     }
