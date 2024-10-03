@@ -6,9 +6,9 @@ import com.ironhack.task1.model.MemberStatus;
 import com.ironhack.task1.service.ChapterService;
 import com.ironhack.task1.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.time.ZonedDateTime;
 
 @Component
@@ -21,18 +21,25 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Chapter chapter = new Chapter("bronx","one");
+        Faker faker = new Faker();
 
-        Member president = new Member("joseph",
+        Chapter chapter = new Chapter(
+                faker.address().cityName(),
+                faker.funnyName().name());
+
+        Member president = new Member(
+                faker.name().fullName(),
                 ZonedDateTime.now(),
                 MemberStatus.ACTIVE);
 
         chapter.setPresident(president);
         chapterService.save(chapter);
 
-        Member member = new Member("salvatore",
+        Member member = new Member(
+                faker.name().femaleFirstName(),
                 ZonedDateTime.now(),
                 MemberStatus.ACTIVE);
         memberService.save(member);
+
     }
 }
