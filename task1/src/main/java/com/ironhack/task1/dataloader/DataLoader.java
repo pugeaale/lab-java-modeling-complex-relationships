@@ -1,7 +1,9 @@
 package com.ironhack.task1.dataloader;
 
+import com.ironhack.task1.model.Chapter;
 import com.ironhack.task1.model.Member;
 import com.ironhack.task1.model.MemberStatus;
+import com.ironhack.task1.service.ChapterService;
 import com.ironhack.task1.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +17,8 @@ public class DataLoader implements CommandLineRunner {
 
     private final MemberService memberService;
 
+    private final ChapterService chapterService;
+
     @Override
     public void run(String... args) throws Exception {
         Member member = new Member("salvatore",
@@ -23,6 +27,8 @@ public class DataLoader implements CommandLineRunner {
         Member memberSaved = memberService.save(member);
         System.out.println(memberSaved);
 
-
+        Chapter chapter = new Chapter("bronx","one");
+        Chapter chapterSaved = chapterService.save(chapter);
+        System.out.println(chapterSaved);
     }
 }
