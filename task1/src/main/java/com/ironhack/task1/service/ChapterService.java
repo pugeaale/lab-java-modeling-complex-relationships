@@ -2,6 +2,7 @@ package com.ironhack.task1.service;
 
 import com.ironhack.task1.model.Chapter;
 import com.ironhack.task1.repository.ChapterRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class ChapterService {
 
     private final ChapterRepository chapterRepository;
 
+    @Transactional
     public Chapter save(Chapter chapter) {
         log.info("Saving chapter: {}", chapter);
         return chapterRepository.save(chapter);
