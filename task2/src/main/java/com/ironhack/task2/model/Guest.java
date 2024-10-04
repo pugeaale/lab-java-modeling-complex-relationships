@@ -18,6 +18,10 @@ public class Guest {
     @Enumerated(EnumType.STRING)
     private GuestStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "eventId", referencedColumnName = "id")
+    private Event event;
+
     public Guest(String name, GuestStatus status) {
         this.name = name;
         this.status = status;
