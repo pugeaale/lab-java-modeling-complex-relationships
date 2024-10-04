@@ -15,4 +15,8 @@ public class ExpositionService {
     public Exposition save(Exposition exposition) {
         return expositionRepository.save(exposition);
     }
+
+    public long count() {
+        return expositionRepository.count();
+    }
 }

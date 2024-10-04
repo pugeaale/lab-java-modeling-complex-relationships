@@ -15,4 +15,8 @@ public class ConferenceService {
     public Conference save(Conference conference) {
         return conferenceRepository.save(conference);
     }
+
+    public long count() {
+        return conferenceRepository.count();
+    }
 }
