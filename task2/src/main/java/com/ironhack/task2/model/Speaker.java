@@ -1,9 +1,6 @@
 package com.ironhack.task2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +14,10 @@ public class Speaker {
     private Long id;
     private String name;
     private Integer presentationDuration;
+
+    @ManyToOne
+    @JoinColumn(name = "conferenceId" , referencedColumnName = "id")
+    private Conference conference;
 
     public Speaker(String name, Integer presentationDuration) {
         this.name = name;
