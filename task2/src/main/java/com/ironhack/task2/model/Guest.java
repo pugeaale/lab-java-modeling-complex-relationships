@@ -18,7 +18,8 @@ public class Guest {
     @Enumerated(EnumType.STRING)
     private GuestStatus status;
 
-    @ManyToOne
+    //we want a lazy loading by default eager
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "eventId", referencedColumnName = "id")
     private Event event;
 
