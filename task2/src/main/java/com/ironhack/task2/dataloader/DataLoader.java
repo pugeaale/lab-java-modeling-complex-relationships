@@ -3,6 +3,7 @@ package com.ironhack.task2.dataloader;
 import com.ironhack.task2.model.*;
 import com.ironhack.task2.service.*;
 import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +17,10 @@ public class DataLoader implements CommandLineRunner {
     private final EventService eventService;
     private final ExpositionService expositionService;
     private final ConferenceService conferenceService;
+    private Faker faker = new Faker();
 
     @Override
     public void run(String... args) throws Exception {
-        Speaker speaker = new Speaker();
-        speaker.setName("john");
-        speaker.setPresentationDuration(33);
-        speakerService.save(speaker);
-
-        Guest guest = new Guest();
-        guest.setName("julie");
-        guest.setStatus(GuestStatus.ATTENDING);
-        guestService.save(guest);
-
         Event event = new Event();
         event.setDuration(32);
         event.setLocation("paris");
@@ -36,18 +28,48 @@ public class DataLoader implements CommandLineRunner {
         event.setDate(LocalDate.now());
         eventService.save(event);
 
-        Exposition exposition = new Exposition();
-        exposition.setDuration(4);
-        exposition.setLocation("PANAME");
-        exposition.setTitle("mondial_tattoo");
-        exposition.setDate(LocalDate.now());
-        expositionService.save(exposition);
+        Exposition expositionSaved = createNewExposition();
 
-        Conference conference = new Conference();
-        conference.setDuration(3);
-        conference.setLocation("PANAME");
-        conference.setTitle("devoxx 2025");
-        conference.setDate(LocalDate.now());
-        conferenceService.save(conference);
+        Guest guestSaved = createNewGuest(expositionSaved);
+
+        Conference confSaved = createNewConference();
+
+        Speaker speakerSaved = createNewSpeaker(confSaved);
     }
+
+    private Guest createNewGuest( Event event) {
+        Guest guest = new Guest();
+        guest.setName(faker.name().femaleFirstName());
+        guest.setStatus(GuestStatus.ATTENDING);
+        guest.setEvent(event);
+        return guestService.save(guest);
+    }
+
+    private Exposition createNewExposition() {
+        Exposition exposition = new Exposition();
+        exposition.setDuration(faker.number().positive());
+        exposition.setLocation(faker.address().city());
+        exposition.setTitle(faker.artist().name());
+        exposition.setDate(LocalDate.now());
+        return expositionService.save(exposition);
+    }
+
+    private Speaker createNewSpeaker(Conference confSaved) {
+        Speaker speaker = new Speaker();
+        speaker.setName(faker.name().fullName());
+        speaker.setPresentationDuration(faker.number().positive());
+        speaker.setConference(confSaved);
+        return speakerService.save(speaker);
+    }
+
+    private Conference createNewConference() {
+        Conference conference = new Conference();
+        conference.setDuration(faker.number().positive());
+        conference.setLocation(faker.address().city());
+        conference.setTitle(faker.community().character());
+        conference.setDate(LocalDate.now());
+        return conferenceService.save(conference);
+    }
+
+
 }
