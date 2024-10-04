@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -20,6 +23,10 @@ public class Chapter {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "presidentId")
     private Member president;
+
+    @OneToMany(mappedBy = "chapter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@JoinColumn(name = "chapterId", referencedColumnName = "id")
+    private List<Member> members = new ArrayList<Member>();
 
     public Chapter(String district, String name) {
         this.district = district;

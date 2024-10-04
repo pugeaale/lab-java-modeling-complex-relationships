@@ -20,6 +20,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "chapterId" , referencedColumnName = "id")
+    private Chapter chapter;
+
     public Member(String name, ZonedDateTime renewalDate, MemberStatus status) {
         this.name = name;
         this.renewalDate = renewalDate;

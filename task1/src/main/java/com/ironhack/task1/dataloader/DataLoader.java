@@ -21,19 +21,20 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Faker faker = new Faker();
-        create7chaptersWithPresidents();
+        //create7chaptersWithPresidents();
         Member member = new Member(
-                faker.name().femaleFirstName(),
+            "dd",
                 ZonedDateTime.now(),
-                MemberStatus.ACTIVE);
+                MemberStatus.ACTIVE
+        );
+        Chapter chapter = new Chapter("d","dd");
+        member.setChapter(chapter);
         memberService.save(member);
-
     }
 
     public void create7chaptersWithPresidents() {
         Faker faker = new Faker();
-        for(int i = 0; i < 7; i++) {
+        for(int i = 0; i < 1; i++) {
             Chapter chapter = new Chapter(
                     faker.address().cityName(),
                     faker.funnyName().name());
@@ -44,6 +45,13 @@ public class DataLoader implements CommandLineRunner {
                     MemberStatus.ACTIVE);
 
             chapter.setPresident(president);
+
+            Member member = new Member(
+                    faker.name().femaleFirstName(),
+                    ZonedDateTime.now(),
+                    MemberStatus.ACTIVE);
+            chapter.getMembers().add(member);
+
             chapterService.save(chapter);
         }
 
