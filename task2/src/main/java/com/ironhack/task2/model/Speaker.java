@@ -15,7 +15,8 @@ public class Speaker {
     private String name;
     private Integer presentationDuration;
 
-    @ManyToOne
+    //we want a lazy loading by default eager
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conferenceId" , referencedColumnName = "id")
     private Conference conference;
 
