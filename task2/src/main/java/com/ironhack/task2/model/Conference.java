@@ -1,7 +1,9 @@
 package com.ironhack.task2.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+@PrimaryKeyJoinColumn(name="id")
 public class Conference extends Event {
 
     @OneToMany(mappedBy = "conference")

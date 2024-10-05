@@ -17,6 +17,7 @@ title: the title of the event
 @Data
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Event {
 
     @Id
