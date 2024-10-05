@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ExpositionService {
@@ -18,5 +20,9 @@ public class ExpositionService {
 
     public long count() {
         return expositionRepository.count();
+    }
+
+    public Optional<Exposition> findById(long id) {
+        return expositionRepository.findById(id);
     }
 }
