@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -28,13 +30,81 @@ public class DataLoader implements CommandLineRunner {
         event.setDate(LocalDate.now());
         eventService.save(event);
 
+        testCreateExposition();
+        testCreateExpositionWithGuest();
+        testDeleteGuestFromExposition();
+        testCreateConference();
+        testCreateConferenceWithSpeaker();
+        testDeletingSpeakerFromConference();
+        testCreatingConferenceWithGuest();
+        testDeletingGuestFromConference();
+    }
+
+    public void testCreateExposition() {
         Exposition expositionSaved = createNewExposition();
+        Optional<Exposition> result = expositionService.findById(expositionSaved.getId().longValue());
+        if(result.isPresent()) {
+            System.out.println(result.get().getId() == expositionSaved.getId());
+        }
+    }
 
-        Guest guestSaved = createNewGuest(expositionSaved);
+    public void testCreateExpositionWithGuest() {
+        Guest guest = createNewGuest(createNewExposition());
+        Optional<Guest> result = guestService.findById(guest.getId().longValue());
+        if(result.isPresent()) {
+            System.out.println(result.get().getId() == guest.getId());
+        }
+    }
 
+    public void testDeleteGuestFromExposition() {
+        Guest guest = createNewGuest(createNewExposition());
+        guestService.deleteById(guest.getId());
+        Optional<Guest> result = guestService.findById(guest.getId().longValue());
+        if(result.isEmpty()) {
+            System.out.println("TEST deleting exposition guest : OK");
+        }
+    }
+
+    public void testCreateConference() {
         Conference confSaved = createNewConference();
+        Optional<Conference> conferenceRetrieved = conferenceService.findById(confSaved.getId().longValue());
+        if(conferenceRetrieved.isPresent()) {
+            System.out.println(conferenceRetrieved.get().getId() == confSaved.getId());
+        }
+    }
 
-        Speaker speakerSaved = createNewSpeaker(confSaved);
+    public void testCreateConferenceWithSpeaker() {
+        Speaker speaker = createNewSpeaker(createNewConference());
+        Optional<Speaker> result = speakerService.findById(speaker.getId().longValue());
+        if(result.isPresent()) {
+            System.out.println(result.get().getId() == speaker.getId());
+        }
+    }
+
+    public void testDeletingSpeakerFromConference() {
+        Speaker speaker = createNewSpeaker(createNewConference());
+        speakerService.deleteById(speaker.getId());
+        Optional<Speaker> result = speakerService.findById(speaker.getId().longValue());
+        if(result.isEmpty()) {
+            System.out.println("TEST deleting speaker : OK");
+        }
+    }
+
+    public void testCreatingConferenceWithGuest() {
+        Guest guest = createNewGuest(createNewConference());
+        Optional<Guest> result = guestService.findById(guest.getId().longValue());
+        if(result.isPresent()) {
+            System.out.println(result.get().getId() == guest.getId());
+        }
+    }
+
+    public void testDeletingGuestFromConference() {
+        Guest guest = createNewGuest(createNewConference());
+        guestService.deleteById(guest.getId());
+        Optional<Guest> result = guestService.findById(guest.getId().longValue());
+        if(result.isEmpty()) {
+            System.out.println("TEST deleting conference guest : OK");
+        }
     }
 
     private Guest createNewGuest( Event event) {
