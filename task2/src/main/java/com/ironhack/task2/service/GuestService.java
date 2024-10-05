@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +26,9 @@ public class GuestService {
     @Transactional
     public void deleteById(Long id) {
         guestRepository.deleteById(id);
+    }
+
+    public Optional<Guest> findById(Long id) {
+        return guestRepository.findById(id);
     }
 }
