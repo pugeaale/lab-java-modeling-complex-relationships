@@ -32,4 +32,13 @@ public class Chapter {
         this.district = district;
         this.name = name;
     }
+
+    public void addMember(Member member) {
+        member.setChapter(this);
+        members.add(member);
+    }
+
+    public void removeMember(Member member) {
+        members.remove(member);
+    }
 }
